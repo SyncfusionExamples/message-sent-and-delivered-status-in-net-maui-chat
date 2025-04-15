@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MauiChat
 {
@@ -28,6 +29,13 @@ namespace MauiChat
         /// </summary>
         private Author currentUser;
 
+        /// <summary>
+        /// Represents the command used to send a message.
+        /// </summary>
+        private ICommand sendMessageCommand;
+
+        internal SfChat chat;
+
         #endregion
 
         #region Constructor
@@ -36,6 +44,7 @@ namespace MauiChat
             this.messages = new ObservableCollection<object>();
             this.currentUser = new Author() { Name = "Nancy", Avatar = "peoplecircle16.png" };
             this.GenerateMessages();
+            SendMessageCommand = new Command<object>(OnSendMessage);
         }
         #endregion
 
@@ -88,6 +97,22 @@ namespace MauiChat
             }
         }
 
+        /// <summary>
+        /// Gets or sets the command used to send a message.
+        /// </summary>
+        public ICommand SendMessageCommand
+        {
+            get
+            {
+                return this.sendMessageCommand;
+            }
+            set
+            {
+                this.sendMessageCommand = value;
+                RaisePropertyChanged("SendMessageCommand");
+            }
+        }
+
         #endregion
 
         #region INotifyPropertyChanged
@@ -105,6 +130,33 @@ namespace MauiChat
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
+
+        /// <summary>
+        /// Handles the logic for sending a chat message.
+        /// </summary>
+        /// <param name="obj"></param>
+        private async void OnSendMessage(object obj)
+        {
+            var e = obj as Syncfusion.Maui.Chat.SendMessageEventArgs;
+            e.Handled = true;
+            if (e.Message is TextMessage message && !string.IsNullOrWhiteSpace(message.Text))
+            {
+                var data = new TextMessageExt()
+                {
+                    Author = CurrentUser,
+                    Text = message.Text,
+                    IsMessageSeen = false,
+                };
+
+                Messages.Add(data);
+
+                chat.Editor.Text = string.Empty;
+
+                // Simulate a delay before marking message as seen
+                await Task.Delay(2000);
+                data.IsMessageSeen = true;
             }
         }
 

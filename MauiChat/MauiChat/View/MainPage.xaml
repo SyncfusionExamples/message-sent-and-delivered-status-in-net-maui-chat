@@ -5,12 +5,6 @@
              xmlns:sfChat="clr-namespace:Syncfusion.Maui.Chat;assembly=Syncfusion.Maui.Chat"
              x:Class="MauiChat.MainPage">
 
-    <!--<ContentPage.Resources>
-        <ResourceDictionary>
-            <local:ChatMessageTemplateSelectorExt Chat="{x:Reference sfChat}" x:Key="templateSelector"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>-->
-
     <ContentPage.BindingContext>
         <local:ViewModel x:Name="viewModel"/>
     </ContentPage.BindingContext>
@@ -18,9 +12,8 @@
     <ContentPage.Content>
         <sfChat:SfChat x:Name="sfChat"
                        Messages="{Binding Messages}"
-                       CurrentUser="{Binding CurrentUser}"
-                       Background="#ECE5DD"
-                      
-                       SendMessage="sfChat_SendMessage"/>
+                       CurrentUser="{Binding CurrentUser}" 
+                       SendMessageCommand="{Binding SendMessageCommand}"
+                       Background="#ECE5DD"/>
     </ContentPage.Content>
 </ContentPage>
