@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:avatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:convertor="clr-namespace:MauiChat.Convertor"
+             x:Class="MauiChat.OutgoingMessageTemplate">
+    
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <convertor:OutgoingMessageSeenIconColorConverter x:Key="OutgoingMessageSeenIconColorConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    
+    <ContentView.Content>
+        <Grid HorizontalOptions="End"
+              ColumnSpacing="8"
+              Margin="10,2"
+              Padding="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Outgoing Message Bubble -->
+            <Frame Grid.Row="0"
+                   Grid.Column="0"
+                   BackgroundColor="#DCF8C6"
+                   CornerRadius="20"
+                   Padding="12,8"
+                   HasShadow="False"
+                   BorderColor="Transparent">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Message Text -->
+                    <Label Grid.Column="0"
+                           Text="{Binding Text}"
+                           TextColor="#212121"
+                           FontFamily="Roboto"
+                           FontSize="15"
+                           LineBreakMode="WordWrap"
+                           VerticalTextAlignment="End"
+                           HorizontalTextAlignment="Start" />
+
+                    <!-- Seen Icon -->
+                    <Label Grid.Column="1"
+                           Text="&#xe727;"
+                           FontFamily="MauiSampleFontIcon"
+                           FontSize="12"
+                           VerticalOptions="End"
+                           HorizontalOptions="End"
+                           Margin="6,0,0,0"
+                           TextColor="{Binding IsMessageSeen, Converter={StaticResource OutgoingMessageSeenIconColorConverter}}" />
+                </Grid>
+            </Frame>
+
+            <!-- Avatar -->
+            <avatar:SfAvatarView Grid.Row="0"
+                                 Grid.Column="1"
+                                 WidthRequest="36"
+                                 HeightRequest="36"
+                                 CornerRadius="18"
+                                 VerticalOptions="End"
+                                 HorizontalOptions="Center"
+                                 Stroke="Transparent"
+                                 ContentType="Default"
+                                 ImageSource="{Binding Author.Avatar}" />
+        </Grid>
+    </ContentView.Content>
+
+
+</ContentView>
