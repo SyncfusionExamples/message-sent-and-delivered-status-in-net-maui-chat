@@ -1,5 +1,5 @@
 # message-sent-and-delivered-status-in-net-maui-chat
-This example demonstrates how to add ticks in message item to indicate the message delivered status using custom logic in.NET MAUI Chat(SfChat).
+This example demonstrates how to add ticks in message item to indicate the message delivered status using custom logic in .NET MAUI Chat(SfChat).
 
 ## Sample
 
